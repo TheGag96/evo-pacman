@@ -1,0 +1,6 @@
+name "evo-pacman"
+description "A EA to evolve AIs for Pacman and Ghosts"
+authors "Grayson Gratop"
+copyright "Copyright © 2016, Grayson Gratop"
+license "WTFPL"
+dflags "-fPIC" "-defaultlib=libphobos2.so"
