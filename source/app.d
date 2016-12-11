@@ -273,7 +273,7 @@ Matchup[] getMatchups(PacmanController[] popPacman, GhostController[] popGhosts)
   randomShuffle(popPacman);
   randomShuffle(popGhosts);
 
-  Matchup[] result = new Matchup[](max(config.pacman.populationSize, config.ghosts.populationSize));
+  Matchup[] result = new Matchup[](max(popPacman.length, popGhosts.length));
 
   foreach (i; 0..result.length) {
     //create at least one matchup for each member of the population, wrapping around the smaller array
@@ -350,7 +350,6 @@ void doParentSelection(T)(ref T[] population) {
 
     int numTop    = cast(int) (popConfig.childrenPerGen*0.8*2),
         numBottom = popConfig.childrenPerGen*2 - numTop; 
-
 
     while (topParents.length    < numTop)    topParents    ~= fps(topPop);
     while (bottomParents.length < numBottom) bottomParents ~= fps(bottomPop);

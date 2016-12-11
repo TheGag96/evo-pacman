@@ -64,7 +64,7 @@ class Game {
       bool gameOver = false;
 
       foreach (i, ghost; ghosts) {
-        if (ghost == pacman || pacmanPrev == ghost || ghostPrev[i] == pacman) {
+        if (ghost == pacman || (pacmanPrev == ghost && ghostPrev[i] == pacman)) {
           gameOver = true;
           break;
         }
@@ -111,26 +111,24 @@ class Game {
             if (spot != pacman) {
               fruit = spot;
               placed = true;
+              emptySpaces = emptySpaces.remove(choice);  
             }
-
-            emptySpaces = emptySpaces.remove(choice);  
+            else if (emptySpaces.length == 1) break;
           }
 
-          if (keepLog) gameString.put(format("f %d %d\n", fruit.x, fruit.y));
+          if (keepLog) gameString.put(format("f %d %d\n", fruit.x, maze.rows-1-fruit.y));
         }
       }
-      else {
-        if (fruit == pacman) {
-          foreach (i, space; emptySpaces) {
-            if (fruit == space) {
-              emptySpaces = emptySpaces.remove(i);
-              break;
-            }
+      else if (fruit == pacman) {
+        foreach (i, space; emptySpaces) {
+          if (fruit == space) {
+            emptySpaces = emptySpaces.remove(i);
+            break;
           }
-
-          fruit = Point(-1, -1);
-          score += fruitScore;
         }
+
+        fruit = Point(-1, -1);
+        score += fruitScore;
       }
 
       ////

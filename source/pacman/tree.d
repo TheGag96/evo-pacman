@@ -94,24 +94,11 @@ class Tree {
     }
   }
 
-  /*
-    For testing purposes. Since each tree node should either be a terminal or a binary function,
-    The right node should ALWAYS be null if the left one is and vice versa.
-  */
-  void verify() const {
-    assert((this.left is null) == (this.right is null));
-
-    if (this.left !is null) {
-      this.left.verify();
-      this.right.verify();
-    }
-  }
-
   Tree breed(Tree other) {
     Tree child = this.dup;
     Node[] childNodeList = [];
 
-    this.getNodeList(0, childNodeList);
+    child.getNodeList(0, childNodeList);
 
     if (uniform!"[]"(0, 1) == 1) {
       ////
@@ -130,23 +117,7 @@ class Tree {
         childCrossPoint.right = null;
       }
       else {
-        writeln("how");
-
-        //things are fine before here
-        otherCrossPoint.verify(); 
-
-        writeln("is ");
-
-        //left side is duplicated by calling .dup(), a const function.
         childCrossPoint.left  = otherCrossPoint.left.dup;
-        
-        writeln("this ");
-
-        //assertion fails here. somehow, .dup() modifies the calling object despite being const!
-        otherCrossPoint.verify();
-        writeln("happening");
-
-        //if i leave out verification, this will fail because dup expects left and right to have the same "nullness"
         childCrossPoint.right = otherCrossPoint.right.dup;
       }
 
