@@ -98,6 +98,10 @@ class Tree {
     }
   }
 
+  /*
+    For testing purposes. Since each tree node should either be a terminal or a binary function,
+    The right node should ALWAYS be null if the left one is and vice versa.
+  */
   void verify() {
     assert((this.left is null) == (this.right is null));
 
@@ -111,19 +115,12 @@ class Tree {
     Tree child = this.dup;
     Node[] childNodeList = [];
 
-    writeln("breeding");
-    this.verify();
-    writeln("aa");
-    other.verify();
-    writeln("beep");
-
     this.getNodeList(0, childNodeList);
 
     if (uniform!"[]"(0, 1) == 1) {
       ////
       // crossover
       ////
-      writeln("yes1");
 
       Node[] otherNodeList = [];
       other.getNodeList(0, otherNodeList);
@@ -137,16 +134,24 @@ class Tree {
         childCrossPoint.right = null;
       }
       else {
-        writeln("in what manner");
-        otherCrossPoint.verify();
-        writeln("is this ", otherCrossPoint.toString);
+        writeln("how");
+
+        //things are fine before here
+        otherCrossPoint.verify(); 
+
+        writeln("is ");
+
+        //left side is duplicated by calling .dup(), a const function.
         childCrossPoint.left  = otherCrossPoint.left.dup;
-        writeln("freaking ", otherCrossPoint.toString);
+        
+        writeln("this ");
+
+        //assertion fails here. somehow, .dup() modifies the calling object despite being const!
         otherCrossPoint.verify();
         writeln("happening");
-        writeln("yes2");
+
+        //if i leave out verification, this will fail because dup expects left and right to have the same "nullness"
         childCrossPoint.right = otherCrossPoint.right.dup;
-        writeln("yes3");
       }
 
       childCrossPoint.data = otherCrossPoint.data;
@@ -169,15 +174,12 @@ class Tree {
     return child;
   }
 
-  Tree dup() {
+  Tree dup() const {
     Tree result = new Tree(null, null, this.data, this.type);
 
     if (this.left !is null) {
-      writeln("fucking");
       result.left  = this.left.dup;
-      writeln("why ", this.left is null, " ", this.right is null, " ", this.type, " ", this.left.type);
       result.right = this.right.dup;
-      writeln("how");
     }
 
     return result;
