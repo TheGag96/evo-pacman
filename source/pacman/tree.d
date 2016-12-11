@@ -69,10 +69,6 @@ class Tree {
         this.right         = new Tree(strategy, depth+1);
       }
     }
-
-    writeln("creation");
-    this.verify();
-    writeln("creation done");
   }
 
   this(Tree left, Tree right, Data data, DataType type) {
@@ -102,7 +98,7 @@ class Tree {
     For testing purposes. Since each tree node should either be a terminal or a binary function,
     The right node should ALWAYS be null if the left one is and vice versa.
   */
-  void verify() {
+  void verify() const {
     assert((this.left is null) == (this.right is null));
 
     if (this.left !is null) {

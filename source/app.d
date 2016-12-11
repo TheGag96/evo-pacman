@@ -431,7 +431,7 @@ void logBasicData(string configPath) {
     logFile.writefln("    Tournament size: %d", config.ghosts.tournamentSize);
   }
 
-  logFile.writeln("Each ghost has their own expression tree: %s\n", config.ghosts.treeForEachGhost.to!string);
+  logFile.writefln("Each ghost has their own expression tree: %s\n", config.ghosts.treeForEachGhost.to!string);
 
   logFile.writefln("Grid size: %d x %d", config.maze.rows, config.maze.rows);
   logFile.writefln("Wall density: %f", config.maze.wallDensity);
